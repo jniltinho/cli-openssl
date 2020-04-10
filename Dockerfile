@@ -33,4 +33,6 @@ COPY docker-entrypoint.sh /usr/local/bin/
 COPY get-ssl.py /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh /usr/local/bin/get-ssl.py
 
+WORKDIR /tmp
+
 ENTRYPOINT ["docker-entrypoint.sh"]
