@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 const (
@@ -76,10 +77,10 @@ func run(command string) {
 	}
 }
 
-func createFile(command string) {
+func createFile(command, filename string) {
 	cmd := exec.Command("/bin/sh", "-c", command)
 	// open the out file for writing
-	outfile, err := os.Create("./ca.crt")
+	outfile, err := os.Create(filename)
 	if err != nil {
 		panic(err)
 	}
@@ -97,12 +98,14 @@ func showSSLserver(serverName, urlPort string) {
 
 	cmd := fmt.Sprintf("echo|openssl s_client -servername %s -connect %s 2>/dev/null|openssl x509", serverName, urlPort)
 	run(cmd)
-	createFile(cmd)
+	filename := strings.Split(urlPort, ".")[0] + ".crt"
+	createFile(cmd, filename)
 }
 
 func showSSL(urlPort string) {
 
 	cmd := fmt.Sprintf("echo|openssl s_client -connect %s 2>/dev/null|openssl x509", urlPort)
 	run(cmd)
-	createFile(cmd)
+	filename := strings.Split(urlPort, ".")[0] + ".crt"
+	createFile(cmd, filename)
 }
