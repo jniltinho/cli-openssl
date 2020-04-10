@@ -6,11 +6,18 @@ FROM golang:alpine AS builder
 ## Caso você tenha mais de um certificado SSL no Servidor
 # docker run -it jniltinho/cli-openssl get-ssl -c www.mydomain.com:443 -s www.mydomain.com
 
+RUN set -x && apk add --no-cache curl xz tar
+RUN set -x && curl -skLO https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz \
+    && tar -xf upx-3.96-amd64_linux.tar.xz \   
+    && cp upx-3.96-amd64_linux/upx /usr/local/bin/ \
+    && rm -rf upx-3.96*
+
 # Git is required for fetching the dependencies.
 WORKDIR $GOPATH/src/jniltinho/cli-openssl/
 COPY get-ssl.go .
-RUN go build get-ssl.go && mv get-ssl /go/bin/get-ssl
-
+RUN go build get-ssl.go
+RUN upx get-ssl
+RUN mv get-ssl /go/bin/get-ssl
 
 FROM alpine:latest
 LABEL maintainer="Nilton Oliveira jniltinho@gmail.com"
