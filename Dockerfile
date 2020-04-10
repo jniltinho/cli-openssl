@@ -1,4 +1,3 @@
-
 FROM golang:alpine AS builder
 
 # docker build --no-cache -t jniltinho/cli-openssl .
