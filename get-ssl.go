@@ -20,18 +20,15 @@ var (
 
 func init() {
 
-	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "Version:", myVersion)
-		fmt.Fprintln(os.Stderr, "Built:", buildDate)
-		fmt.Fprintln(os.Stderr, "Fonte:", sourceProject)
-		flag.PrintDefaults()
-	}
 	flag.StringVar(&serverName, "s", "", "Host Name => www.domain.com")
 	flag.StringVar(&urlPort, "c", "", "URL:PORT =>  www.domain.com:443")
-
 }
 
 func usage() {
+	fmt.Fprintln(os.Stderr, "Version:", myVersion)
+	fmt.Fprintln(os.Stderr, "Built:", buildDate)
+	fmt.Fprintln(os.Stderr, "Fonte:", sourceProject)
+	flag.PrintDefaults()
 	fmt.Printf("Usage : %s -c google.com:443\n", os.Args[0])
 	fmt.Printf("Usage : %s -s www.domain.com -c www.domain.com:443\n", os.Args[0])
 	os.Exit(0)
