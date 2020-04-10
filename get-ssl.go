@@ -70,8 +70,8 @@ func run(command string) {
 	cmd := exec.Command("/bin/sh", "-c", command)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err != nil {
+	// cmd.Stdin = os.Stdin
+	if err := cmd.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
