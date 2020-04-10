@@ -1,7 +1,6 @@
-FROM docker:stable-dind
+FROM alpine:latest
 
 ENV TZ=America/Sao_Paulo
-
 
 RUN set -x \
     && apk add --no-cache openssl ca-certificates tzdata python \
