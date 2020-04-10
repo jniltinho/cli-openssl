@@ -4,7 +4,7 @@ Linha de Comando com Docker + OpenSSL, desse modo você não precisa instalar op
 
 ## Usando a Imagem com OpenSSL
 
-```
+```bash
 docker build --no-cache -t jniltinho/cli-openssl .
 docker run -it -v $(pwd):/tmp jniltinho/cli-openssl get-ssl --help
 docker run -it -v $(pwd):/tmp jniltinho/cli-openssl get-ssl -c google.com:443
