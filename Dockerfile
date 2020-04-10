@@ -14,5 +14,7 @@ RUN set -x \
 
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY get-ssl.py /usr/local/bin/
+RUN ln -s /usr/local/bin/get-ssl.py /usr/local/bin/get-ssl
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
