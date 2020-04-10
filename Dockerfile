@@ -7,11 +7,9 @@ FROM golang:alpine AS builder
 # docker run -it jniltinho/cli-openssl get-ssl -c www.mydomain.com:443 -s www.mydomain.com
 
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git
 WORKDIR $GOPATH/src/jniltinho/cli-openssl/
 COPY get-ssl.go .
-#RUN go get -d -v
-RUN go build get-ssl.go -o /go/bin/get-ssl
+RUN go build get-ssl.go && mv get-ssl /go/bin/get-ssl
 
 
 FROM alpine:latest
