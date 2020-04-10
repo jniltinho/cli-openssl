@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 )
 
 const (
 	myVersion     = "0.1"
-	buildDate     = "20200409"
+	buildDate     = "20200410"
 	sourceProject = "https://github.com/jniltinho/cli-openssl"
 )
 
@@ -65,14 +66,24 @@ func sh(command string) {
 	print(string(out))
 }
 
+func run(command string) {
+	cmd := exec.Command("/bin/sh", "-c", command)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func showSSLserver(serverName, urlPort string) {
 
 	cmd := fmt.Sprintf("echo|openssl s_client -servername %s -connect %s 2>/dev/null|openssl x509", serverName, urlPort)
-	sh(cmd)
+	run(cmd)
 }
 
 func showSSL(urlPort string) {
 
 	cmd := fmt.Sprintf("echo|openssl s_client -connect %s 2>/dev/null|openssl x509", urlPort)
-	sh(cmd)
+	run(cmd)
 }
