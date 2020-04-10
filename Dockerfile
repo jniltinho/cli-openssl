@@ -1,5 +1,5 @@
-LABEL maintainer="Nilton Oliveira jniltinho@gmail.com"
-ENV TZ America/Sao_Paulo
+
+FROM golang:alpine AS builder
 
 # docker build --no-cache -t jniltinho/cli-openssl .
 # docker run -it jniltinho/cli-openssl get-ssl --help
@@ -7,7 +7,6 @@ ENV TZ America/Sao_Paulo
 ## Caso você tenha mais de um certificado SSL no Servidor
 # docker run -it jniltinho/cli-openssl get-ssl -c www.mydomain.com:443 -s www.mydomain.com
 
-FROM golang:alpine AS builder
 # Git is required for fetching the dependencies.
 RUN apk update && apk add --no-cache git
 WORKDIR $GOPATH/src/jniltinho/cli-openssl/
@@ -17,6 +16,8 @@ RUN go build get-ssl.go -o /go/bin/get-ssl
 
 
 FROM alpine:latest
+LABEL maintainer="Nilton Oliveira jniltinho@gmail.com"
+ENV TZ America/Sao_Paulo
 RUN set -x \
     && apk add --no-cache openssl ca-certificates tzdata \
     && rm -rf /root/.cache /tmp/* /src \
