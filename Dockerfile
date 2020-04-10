@@ -7,8 +7,7 @@ ENV TZ America/Sao_Paulo
 
 RUN set -x \
     && apk add --no-cache openssl ca-certificates tzdata python \
-    && rm -rf /root/.cache /tmp/* \
-    && apk del .build-deps \
+    && rm -rf /root/.cache /tmp/* src \
     && rm -rf /var/cache/apk/*
 
 
