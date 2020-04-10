@@ -15,7 +15,7 @@ docker run -it jniltinho/cli-openssl get-ssl.py -c www.mydomain.com:443 -s www.m
 ## Fazendo o Build
 
 ```bash
-git clone https://github.com/jniltinho/docker-openssl.git
+git clone https://github.com/jniltinho/cli-openssl.git
 cd docker-openssl.git
 docker build --no-cache -t cli-openssl .
 ```
