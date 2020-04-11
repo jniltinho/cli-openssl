@@ -43,12 +43,12 @@ var rootCmd = &cobra.Command{
 		serverName, _ := cmd.Flags().GetString("server-name")
 
 		if serverName != "" && connect != "" {
-			showSSLserver(serverName, connect)
+			getFullSSL(serverName, connect)
 			os.Exit(0)
 		}
 
 		if connect != "" {
-			showSSL(connect)
+			getSSL(connect)
 			os.Exit(0)
 		}
 
@@ -83,27 +83,26 @@ var versionCmd = &cobra.Command{
 	},
 }
 
-func showSSLserver(serverName, urlPort string) {
+func getFullSSL(hostName, hostNamePort string) {
 
-	cmd := fmt.Sprintf("echo|openssl s_client -servername %s -connect %s 2>/dev/null|openssl x509", serverName, urlPort)
-	filename := strings.Split(urlPort, ".")[0] + ".crt"
+	cmd := fmt.Sprintf("echo|openssl s_client -servername %s -connect %s 2>/dev/null|openssl x509", hostName, hostNamePort)
+	filename := strings.Split(hostNamePort, ".")[0] + ".crt"
 	run(cmd, filename)
 }
 
-func showSSL(urlPort string) {
+func getSSL(hostNamePort string) {
 
-	cmd := fmt.Sprintf("echo|openssl s_client -connect %s 2>/dev/null|openssl x509", urlPort)
-	filename := strings.Split(urlPort, ".")[0] + ".crt"
+	cmd := fmt.Sprintf("echo|openssl s_client -connect %s 2>/dev/null|openssl x509", hostNamePort)
+	filename := strings.Split(hostNamePort, ".")[0] + ".crt"
 	run(cmd, filename)
 
-	//createFile(cmd, filename)
 }
 
 func run(command, filename string) {
 
-	stdout, err := exec.Command("/bin/sh", "-c", command).Output()
+	stdout, err := exec.Command("/bin/sh", "-c", command).CombinedOutput()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(string(stdout), err)
 	}
 	print(string(stdout))
 
