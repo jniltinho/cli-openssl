@@ -67,9 +67,9 @@ func Execute() {
 func init() {
 
 	rootCmd.AddCommand(versionCmd)
-	rootCmd.PersistentFlags().StringP("connect", "c", "", "Hostname and Port www.domain.com:443")
+	rootCmd.PersistentFlags().StringP("connect", "c", "google.com:443", "Hostname and Port www.domain.com:443")
 	rootCmd.PersistentFlags().StringP("server-name", "s", "", "Hostname => www.domain.com")
-	//rootCmd.MarkFlagRequired("connect")
+	//rootCmd.MarkPersistentFlagRequired("connect")
 
 }
 
@@ -79,7 +79,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		println("Version:", myVersion)
 		println("Built:", buildDate)
-		println("Fonte:", sourceProject)
+		println("Source:", sourceProject)
 	},
 }
 
